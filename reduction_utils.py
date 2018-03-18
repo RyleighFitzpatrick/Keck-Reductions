@@ -14,6 +14,7 @@ from scipy.optimize import minimize
 from scipy.ndimage.interpolation import shift
 
 
+
 def cosmicRayCleanup(image, outputImage, gain=5.0, readnoise=10.0, sigclip = 5.0, sigfrac = 0.3, objlim = 5.0):
     """Perform cosmic ray cleaning using the Laplacian Edge Detection Method
         This script employs the cosmics.py package written by Pieter G. van Dokkum
@@ -61,7 +62,7 @@ def readFits(fileName, head='no'):
         return data
 
     
-def plotFitsImage(data, vmin=None, vmax=None, title='', save='no'):
+def plotFitsImage(data, vmin=None, vmax=None, title='', save='no', **kwargs):
     """Plot fits image
 
     INPUTS:
@@ -84,6 +85,7 @@ def plotFitsImage(data, vmin=None, vmax=None, title='', save='no'):
 
     #Plot via Imshow    
     plt.clf()
+    plt.figure(**kwargs)
     plt.imshow(data, origin = 'lower', vmin = vmin, vmax = vmax, cmap='plasma')
     plt.title(title) 
     plt.colorbar() #Add colorbar
@@ -515,6 +517,40 @@ def findOrderStartEndByVertCut(flatImg,  colCenterPixel, colWidth=20,
         return orderSep, orderStartEnd
     else:
         return orderSep
+
+
+def separate_orders(rawSpec, flatHr, method = 'vertcut'):
+    """
+    Performs order separation for an echelle spectrum based on the defined
+    regions for each order in a flat field image.
+
+    ARGS:
+        rawSpec: numpy array
+            A 2D numpy array containing intensity values from the data fits image
+        flatHR: numpy array
+            A 2D numpy array containing intensity values from the flat field fits image
+    
+    KWARGS:     
+        method: string
+            Description of the method to be used
+
+            ADD desc. of possible methods here
+
+    RETURN:
+        list of "spatially rectified" numpy arrays, one for each order
+
+    Note: Only those orders which have sufficient data in the flat field 
+            image will be included
+    """
+
+    #Loop through vertical cuts of the flat image
+
+        #
+
+
+
+
+
 
 def findOrderSeparationFromFlatByVertCut(flatImg, startPixel, endPixel, colWidth=20, plot='no'):
 
